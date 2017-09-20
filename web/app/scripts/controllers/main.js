@@ -56,27 +56,97 @@ angular.module('bioclimDemoApp')
       {
         name: "Annual Mean Temperature",
         key: "bio1",
-        unit: "Fahrenheit"
+        unit: "°C"
       },
       {
         name: "Mean Diurnal Range",
         key: "bio2",
-        unit: "Fahrenheit"
+        unit: "°C"
       },
       {
         name: "Isothermality",
         key: "bio3",
-        unit: "Fahrenheit"
+        unit: "°C"
       },
       {
         name: "Temperature Seasonality",
         key: "bio4",
-        unit: "Fahrenheit"
+        unit: "°C"
       },
       {
         name: "Max Temperature of Warmest Month",
         key: "bio5",
-        unit: "Fahrenheit"
+        unit: "°C"
+      },
+      {
+        name: "Min Temperature of Coldest Month",
+        key: "bio6",
+        unit: "°C"
+      },
+      {
+        name: "Temperature Annual Range",
+        key: "bio7",
+        unit: "°C"
+      },
+      {
+        name: "Mean Temperature of Wettest Quarter",
+        key: "bio8",
+        unit: "°C"
+      },
+      {
+        name: "Mean Temperature of Driest Quarter",
+        key: "bio9",
+        unit: "°C"
+      },
+      {
+        name: "Mean Temperature of Warmest Quarter",
+        key: "bio10",
+        unit: "°C"
+      },
+      {
+        name: "Mean Temperature of Coldest Quarter",
+        key: "bio11",
+        unit: "°C"
+      },
+      {
+        name: "Annual Precipitation",
+        key: "bio12",
+        unit: "mm"
+      },
+      {
+        name: "Precipitation of Wettest Month",
+        key: "bio13",
+        unit: "mm"
+      },
+      {
+        name: "Precipitation of Driest Month",
+        key: "bio14",
+        unit: "mm"
+      },
+      {
+        name: "Precipitation Seasonality (Coefficient of Variation)",
+        key: "bio15",
+        unit: "mm"
+      },
+      {
+        name: "Precipitation of Wettest Quarter",
+        key: "bio16",
+        unit: "mm"
+      },
+      {
+        name: "Precipitation of Driest Quarter",
+        key: "bio17",
+        unit: "mm"
+      },
+      {
+        name: "Precipitation of Warmest Quarter",
+        key: "bio18",
+        unit: "mm"
+      },
+      {
+        name: "Precipitation of Coldest Quarter",
+        key: "bio19",
+        unit: "mm"
       }
     ];
 
@@ -148,18 +218,24 @@ angular.module('bioclimDemoApp')
     }
 
     function parseBioValues(values) {
+      values.sort();
       var counts = {};
       for (var i = 0; i < values.length; i++) {
         var num = values[i];
         counts[num] = counts[num] ? counts[num] + 1 : 1;
       }
+      var keys = [];
       var categories = [];
       var data = [];
       for (var property in counts) {
         if (counts.hasOwnProperty(property)) {
-          categories.push({label: property});
-          data.push({value: counts[property]});
+          keys.push(parseFloat(property));
         }
+      }
+      keys.sort(function(a,b) { return a - b;});
+      for (var i = 0; i < keys.length; i++) {
+        categories.push({label: keys[i].toString()});
+        data.push({value: counts[keys[i].toString()]});
       }
       return {
         categories: categories,

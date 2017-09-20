@@ -14,9 +14,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   height: inherit;
 }
 
-/* on small screens, set height to 'auto' for the grid */
-@media screen and (max-width: 767px) {
-  .row.content {
-    height: auto;
-  }
+html,body {
+  padding:0;
+  margin:0;
+  height:100%;
 }
+
