@@ -1,5 +1,5 @@
 {
-  "name": "Bioclim Demo - API",
+  "name": "BioclimDemoAPI",
   "version": "1.0.0",
   "description": "API for Bioclim demo",
   "main": "src/index.js",
