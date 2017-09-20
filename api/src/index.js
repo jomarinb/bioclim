@@ -1,5 +1,5 @@
 const express = require('express');
-const request = require('request');
+const cors = require('cors');
 const bioclim = require('./bioclim');
 const app = express();
 
@@ -20,43 +20,23 @@ app.get('/search', function (req, res) {
     res.sendStatus(400);
     return;
   }
-  const searchUrl = gbifSpeciesSearchUrl + encodeURIComponent(searchTerm);
-  request(searchUrl, function (error, response, body) {
-    if (error !== null) {
-      res.sendStatus(404);
-      return;
-    }
-    body = JSON.parse(body);
-    if (!body.results || body.results.length === 0) {
-      res.sendStatus(404);
-      return;
-    }
-    const gbifData = body.results[0];
-    const data = {
-      gbif: gbifData,
-      values: {}
-    };
-    const occurenceSearchUrl = gbifOccurrenceSearchUrl + gbifData['nubKey'];
-    request(occurenceSearchUrl, function (error, response, body) {
-      if (error === null) {
-        body = JSON.parse(body);
-        var coordinates = body.results.map(function (entry) {
-          return [entry['decimalLatitude'], entry['decimalLongitude']];
-        });
-        data.values = bioclim.getValues(coordinates);
-      }
-      res.status(200).send(data);
-    });
-
-
+  const result = {};
+  gbif.searchSpecies(searchTerm).then(function (gbifData) {
+    result.gbif = gbifData;
+    return eol.getImageData(searchTerm);
+  }).then(function (imgData) {
+    result.eol = imgData;
+    return gbif.searchOccurrences(result.gbif.nubKey);
+  }).then(function (coordinates) {
+    result.values = bioclim.getValues(coordinates);
+  }).then(function () {
+    res.status(200).send(result);
+  }).catch(function (err) {
+    console.log(err);
+    res.sendStatus(404);
   });
-
 });
 
 app.listen(3000, function () {
   console.log('Listening on port 3000!')
 });
-
-'http://api.gbif.org/v1/occurrence/search?datasetKey=datasetKey&hasCoordinate=true'
-
-"/api/species/2435098/occurencedatasets?limit=10&offset=0"

@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.15.4",
     "gdal": "^0.9.6",
     "request": "^2.82.0"
