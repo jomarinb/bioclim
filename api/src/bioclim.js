@@ -29,7 +29,8 @@ module.exports.getValues = function(points) {
       y = Math.floor(y) % dataset.size.y;
       const values = dataset.pixels.read(x, y, 1, 1);
       if (values.length > 0 && values[0] !== dataset.noDataValue) {
-        measurements.push(values[0]);
+        // Divide value by 10 to account for BioClim data format
+        measurements.push(values[0] / 10);
       }
     });
     result["bio" + (i + 1)] = measurements;
