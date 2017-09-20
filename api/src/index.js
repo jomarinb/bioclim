@@ -8,6 +8,12 @@ const gbifOccurrenceSearchUrl = 'https://api.gbif.org/v1/occurrence/search?hasCo
 
 bioclim.loadDatasets('./data');
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/search', function (req, res) {
   const searchTerm = req.query['q'];
   if (!searchTerm || searchTerm === '') {

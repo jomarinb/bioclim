@@ -25,17 +25,20 @@
       <h2>Search</h2>
       <form>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" class="form-control" ng-model="searchInputText" placeholder="Search">
           <div class="input-group-btn">
-            <button class="btn btn-default" type="submit">
+            <button class="btn btn-default" ng-click="searchSpecie()">
               <i class="glyphicon glyphicon-search"></i>
+            </button>
+            <button class="btn btn-default" ng-click="reset()">
+              <i class="glyphicon glyphicon-refresh"></i>
             </button>
           </div>
         </div>
       </form>
       <h3>Bioclim Variables</h3>
       <ul class="nav nav-pills nav-stacked" ng-repeat="bioclimVar in bioclimVars">
-        <li ng-class="{active: $index === activeBioclimVarIndex}"><a ng-click="setActiveBioclimVar($index)">{{bioclimVar.name}}</a></li>
+        <li ng-class="{active: bioclimData && bioclimVar === activeBioclimVar}"><a ng-click="setActiveBioclimVar(bioclimVar)">{{bioclimVar.name}}</a></li>
       </ul>
       <br>
     </div>
@@ -87,11 +90,13 @@
         </div>
       </div>
       <div class="row">
-        <div fusioncharts
-             width="600"
-             height="400"
+        <div ng-show="bioclimData"
+             fusioncharts
+             width="100%"
+             height="100%"
              type="mssplinearea"
-             datasource="{{myDataSource}}">
+             datasource="{{bioclimDataSource}}"
+        >
         </div>
       </div>
     </div>
