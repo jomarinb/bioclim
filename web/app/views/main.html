@@ -44,51 +44,26 @@
     </div>
     <br>
 
-    <div class="col-sm-9">
-      <div class="well">
-        <h4>{{specie.scientificName}}</h4>
-        <p>{{specie.canonicalName}}</p>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <h4>Kingdom</h4>
-            <p>{{specie.kingdom}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <h4>Phylum</h4>
-            <p>{{specie.phylum}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <h4>Order</h4>
-            <p>{{specie.order}}</p>
+    <div class="col-sm-9" ng-if="specie.scientificName">
+      <div class="col-sm-4">
+        <div class="well">
+          <h4>{{specie.canonicalName}} <span class="badge badge-secondary">{{specie.rank}}</span></h4>
+          <p><em>{{specie.scientificName}}</em></p>
+          <!-- Taxonomy -->
+          <br>
+          <h4>Taxonomy</h4>
+          <p ng-repeat="value in specie.higherClassificationMap"><b>{{taxonomy[$index]}}:</b> {{value}}</p>
+          <!-- Common names -->
+          <div ng-if="specie.vernacularNames.length > 0">
+            <br>
+            <p><b>Common name:</b> {{specie.vernacularNames[0].vernacularName}}</p>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <h4>Family</h4>
-            <p>{{specie.family}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <h4>Genus</h4>
-            <p>{{specie.genus}}</p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <h4>Class</h4>
-            <p>{{specie.class}}</p>
-          </div>
-        </div>
+      <div class="col-sm-8">
+        <img style="max-width: 100%; height: auto; max-height: 400px" ng-src="{{imageData.url}}">
       </div>
+
       <div class="row">
         <div ng-show="bioclimData"
              fusioncharts

@@ -15,7 +15,16 @@ angular.module('bioclimDemoApp')
       $scope.bioclimDataSource = null;
       $scope.searchInputText = "";
       $scope.specie = {};
-    };
+      $scope.taxonomy = [
+        "Kingdom",
+        "Phylum",
+        "Class",
+        "Order",
+        "Family",
+        "Genus",
+        "Species"
+      ];
+    }
 
     $scope.reset = init;
 
@@ -34,9 +43,11 @@ angular.module('bioclimDemoApp')
       }).then(function successCallback(response) {
         $scope.specie = response.data.gbif;
         $scope.bioclimData = response.data.values;
+        $scope.imageData = response.data.eol;
       }, function errorCallback(response) {
         $scope.bioclimData = null;
         $scope.bioclimDataSource = null;
+        $scope.imageData = null;
         console.error(response);
       });
     };
