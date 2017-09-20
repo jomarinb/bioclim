@@ -1,0 +1,16 @@
+{
+  "name": "Bioclim Demo - API",
+  "version": "1.0.0",
+  "description": "API for Bioclim demo",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.4",
+    "gdal": "^0.9.6",
+    "request": "^2.82.0"
+  }
+}
