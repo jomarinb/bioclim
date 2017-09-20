@@ -1,7 +1,7 @@
 const common = require('./common');
 
 const gbifSpeciesSearchUrl = 'http://api.gbif.org/v1/species/search?limit=1&q=';
-const gbifOccurrenceSearchUrl = 'https://api.gbif.org/v1/occurrence/search?hasCoordinate=true&limit=100&nubKey='
+const gbifOccurrenceSearchUrl = 'https://api.gbif.org/v1/occurrence/search?hasCoordinate=true&limit=1000&nubKey='
 
 
 module.exports.searchSpecies = function(query) {
