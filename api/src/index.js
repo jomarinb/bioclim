@@ -1,18 +1,24 @@
 const express = require('express');
 const cors = require('cors');
 const bioclim = require('./bioclim');
+const gbif = require('./gbif');
+const eol = require('./eol');
+
+// Initialization
 const app = express();
-
-const gbifSpeciesSearchUrl = 'http://api.gbif.org/v1/species/search?limit=1&q=';
-const gbifOccurrenceSearchUrl = 'https://api.gbif.org/v1/occurrence/search?hasCoordinate=true&limit=100&nubKey='
-
 bioclim.loadDatasets('./data');
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// CORS
+const corsOptions = {
+  allowedHeaders: ['Content-Type', 'X-Requested-With', 'Origin', 'Accept'],
+  exposedHeaders: ['Location'],
+  credentials: true,
+  origin: function(_origin, callback) {
+    // Allow any origin
+    callback(null, true);
+  }
+};
+app.use(cors(corsOptions));
 
 app.get('/search', function (req, res) {
   const searchTerm = req.query['q'];
