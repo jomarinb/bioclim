@@ -1,7 +1,7 @@
 const common = require('./common');
 
 const gbifSpeciesSearchUrl = 'http://api.gbif.org/v1/species/search?limit=1&q=';
-const gbifOccurrenceSearchUrl = 'https://api.gbif.org/v1/occurrence/search?hasCoordinate=true&limit=1000&nubKey='
+const gbifOccurrenceSearchUrl = 'https://api.gbif.org/v1/occurrence/search?hasCoordinate=true&limit=1000&q='
 
 
 module.exports.searchSpecies = function(query) {
@@ -14,8 +14,8 @@ module.exports.searchSpecies = function(query) {
   });
 };
 
-module.exports.searchOccurrences = function (nubKey) {
-  const url = gbifOccurrenceSearchUrl + nubKey;
+module.exports.searchOccurrences = function (query) {
+  const url = gbifOccurrenceSearchUrl + query;
   return common.httpGet(url).then(function (res) {
     if (res.results && res.results.length > 0) {
       return res.results.map(function (entry) {

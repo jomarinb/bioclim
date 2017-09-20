@@ -32,7 +32,7 @@ app.get('/search', function (req, res) {
     return eol.getImageData(searchTerm);
   }).then(function (imgData) {
     result.eol = imgData;
-    return gbif.searchOccurrences(result.gbif.nubKey);
+    return gbif.searchOccurrences(searchTerm);
   }).then(function (coordinates) {
     result.values = bioclim.getValues(coordinates);
   }).then(function () {
